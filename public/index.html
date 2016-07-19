@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MirageRun by MrOnlineCoder</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        #login {
+            text-align: center;
+            padding: 30px;`
+            border-radius: 30px;
+            background-color: #ffffff;
+        }
+        
+        #game {
+            display: none;
+        }
+        body {
+            background-color: #03a9f4;
+        }
+
+        #gameContainer {
+            background-color: white;
+            width: 100%;
+            height: 500px;
+        }
+
+        #gameView {
+            width: 500px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 align="center" class="h1">MirageRun</h1>
+        <hr>
+        <div id="login">
+            <h2>Welcome to MirageRun!</h2>
+            <p>MirageRun - is online minigame collection. You will play with other players. Be smart, but fast.</p>
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="nickname" placeholder="Enter your nickname...">
+                </div>
+                <button class="btn btn-primary" onclick="play()">Play</button>
+                <br>
+                <strong id="error"></strong>
+                <br>
+                <h4>Game by <a href="https://vk.com/computerman78">MrOnlineCoder (Nikita Kogut)</a></h4>
+            </div>
+        </div>
+        <div id="game">
+            <div id="info-container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-success">
+                            <div class="panel-body bg-success">
+                                <strong id="gameType">Waiting for players</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel panel-success">
+                            <div class="panel-body bg-success">
+                                <strong>Time left: </strong> <span id="gameTime">N/A</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel panel-success">
+                            <div class="panel-body bg-success" id="">
+                                <strong>Players online: </strong><span id="playersOnline">N/A</span>
+                                <strong id="playerNick">Player</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="gameContainer">
+                <br>
+                <h2 align="center" class="h2" id="gameStatus">Waiting for players...</h2>
+                <hr>
+                <center>
+                    <div id="gameView"></div>
+                </center>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="wordTypeState" style="display: none;">
+        <p>Type the given text as fast as you can. When you will finish typing the word, press ENTER!</p>
+        <br>
+        <h2 class="h2 bg-warning" id="ftWord" align="center">loading word...</h2>
+        <br>
+        <div class="form-group">
+            <input type="text" class="form-control" id="ftUserWord" onchange="ftSendWord()">
+        </div>
+    </div>
+
+    <div id="zeroFindState" style="display: none;">
+        <p>Find the 0 (zero) in the list and click it to win!</p>
+        <br>
+        <div id="zfList"></div>
+    </div>
+
+    <div id="redButtonState" style="display: none;">
+        <p>CLICK THE BUTTON JUST NOW! JUST DO IT!</p>
+        <br>
+        <button class="btn btn-lg btn-danger" onclick="rbClick()">CLICK!</button>
+    </div>
+
+    <div id="calcState" style="display: none;">
+        <p>Solve a math task as fast as you can! (Press ENTER when you are ready)</p>
+        <br>
+        <h2 id="clExpression">loading...</h2>
+        <div class="form-group">
+            <input type="text" class="form-control" id="clResult" onchange="clSendResult()">
+        </div>
+    </div>
+
+    <div id="spaceState" style="display: none;">
+        <strong>Press SPACE 10 times VERY quickly!</strong>
+        <br>
+        <h2 id="spInfo"></h2>
+    </div>
+
+    <div id="reverseState" style="display: none;">
+        <p>Find out the word by reversing given string!</p>
+        <br>
+        <h2 id="rvWord"></h2>
+        <div class="form-group">
+            <input type="text" class="form-control" id="rvResult" onchange="rvSendResult()">
+        </div>
+    </div>
+
+    <div id="idleState" style="display: none;">
+        <p>Please, wait some seconds until players connect. The game will start when at least 2 players will be online.</p>
+    </div>
+
+    <div id="endState" style="display: none;" class="gameState">
+        <p>The match has ended! The best player is: </p>
+        <h2 align="center" id="bestPlayer">- nobody -</h2>
+        <br>
+        <p>Next match will start in few seconds...</p>
+    </div>
+
+    <!--Third-party libraries-->
+    <script src="js/socket.io.js"></script>
+    <script src="js/contentloader.js"></script>
+    <script src="js/sul.js"></script>
+    <!--Controllers-->
+    <script src="js/fasttype.controller.js"></script>
+    <script src="js/zerofind.controller.js"></script>
+    <script src="js/redbutton.controller.js"></script>
+    <script src="js/calculator.controller.js"></script>
+    <script src="js/space.controller.js"></script>
+    <script src="js/reverse.controller.js"></script>
+    <script src="js/endgame.controller.js"></script>
+    <!--Application core-->
+    <script src="js/app.js"></script>
+</body>
+</html>

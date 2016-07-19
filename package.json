@@ -1,0 +1,22 @@
+{
+  "name": "miragerun",
+  "version": "1.0.0",
+  "description": "A colletion of fast aracde games in your Web Browser!",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "keywords": [
+    "game",
+    "js",
+    "nodejs",
+    "web"
+  ],
+  "author": "MrOnlineCoder",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "socket.io": "^1.4.8"
+  }
+}
