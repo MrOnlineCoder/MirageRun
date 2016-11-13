@@ -6,7 +6,7 @@ function zfInit(initData) {
 			a.onclick = zfClick;
 		} 
 		a.innerHTML = initData[i];
-		$("#zfList").getNative().appendChild(a);
+		$("#zfList").append(a);
 	}
 }
 

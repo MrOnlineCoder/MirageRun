@@ -30,11 +30,19 @@
             width: 500px;
             text-align: center;
         }
+
+        .infoCol {
+            height: 90px;
+        }
+
+        #soundToggle {
+            float: right;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 align="center" class="h1">MirageRun</h1>
+        <h1 align="center" class="h1">MirageRun         <button class="btn btn-warning" id="soundToggle"><img src="/res/sound_on.png" id="toggleIcon"> </button></h1> 
         <hr>
         <div id="login">
             <h2>Welcome to MirageRun!</h2>
@@ -53,14 +61,14 @@
         <div id="game">
             <div id="info-container">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 infoCol">
                         <div class="panel panel-success">
                             <div class="panel-body bg-success">
                                 <strong id="gameType">Waiting for players</strong>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 infoCol">
                         <div class="panel panel-success">
                             <div class="panel-body bg-success">
                                 <strong>Time left: </strong> <span id="gameTime">N/A</span>
@@ -150,7 +158,7 @@
     <!--Third-party libraries-->
     <script src="js/socket.io.js"></script>
     <script src="js/contentloader.js"></script>
-    <script src="js/sul.js"></script>
+    <script src="js/jquery.js"></script>
     <!--Controllers-->
     <script src="js/fasttype.controller.js"></script>
     <script src="js/zerofind.controller.js"></script>

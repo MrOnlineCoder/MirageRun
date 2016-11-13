@@ -9,6 +9,7 @@
 
 var socket;
 var sound;
+var enableSound = true;
 
 var PlayerInfo = {
     nickname: "N/A",
@@ -21,6 +22,15 @@ function updateInfo() {
 
 function noop(arg) {
 
+}
+
+/*
+    I have to implement it, because jquery does not have it :(
+    jQuery is not bad, but it is developed ages, why not add isEmpty function to it?
+*/
+
+function isEmpty( el ){
+    return !$.trim(el.val())
 }
 
 function setupSocket() {
@@ -36,7 +46,7 @@ function setupSocket() {
 
     socket.on("status", function (data) {
         $("#gameStatus").html(data);
-        sound.play();
+        if (enableSound) sound.play();
     });
 
     socket.on("stateChange", function (data) {
@@ -54,9 +64,8 @@ function setupSocket() {
 }
 
 
-
 function play() {
-    if ($("#nickname").isEmpty()) {
+    if (isEmpty($("#nickname"))) {
         showError("Enter your nickname!");
         return;
     }
@@ -78,17 +87,16 @@ function showError(msg) {
 }
 
 function init() {
-	SULasJQuery(true);
-    Loader.init($("#gameView").getNative());
+    Loader.init($("#gameView")[0]);
 
-    Loader.addBlock("IDLE", $("#idleState").getNative(), noop);
-    Loader.addBlock("WORDTYPE", $("#wordTypeState").getNative(), ftInit);
-    Loader.addBlock("ZEROFIND", $("#zeroFindState").getNative(), zfInit);
-    Loader.addBlock("REDBUTTON", $("#redButtonState").getNative(), noop);
-    Loader.addBlock("CALC", $("#calcState").getNative(), clInit);
-    Loader.addBlock("SPACE", $("#spaceState").getNative(), spInit);
-    Loader.addBlock("REVERSE", $("#reverseState").getNative(), rvInit);
-    Loader.addBlock("END", $("#endState").getNative(), endInit);
+    Loader.addBlock("IDLE", $("#idleState")[0], noop);
+    Loader.addBlock("WORDTYPE", $("#wordTypeState")[0], ftInit);
+    Loader.addBlock("ZEROFIND", $("#zeroFindState")[0], zfInit);
+    Loader.addBlock("REDBUTTON", $("#redButtonState")[0], noop);
+    Loader.addBlock("CALC", $("#calcState")[0], clInit);
+    Loader.addBlock("SPACE", $("#spaceState")[0], spInit);
+    Loader.addBlock("REVERSE", $("#reverseState")[0], rvInit);
+    Loader.addBlock("END", $("#endState")[0], endInit);
 
     sound = new Audio("./res/update.wav");
     sound.autoplay = false;
@@ -96,6 +104,14 @@ function init() {
     $("#error").hide();
     $("window").on("beforeunload", function() { 
         socket.disconnect();
+    });
+    $("#soundToggle").click(function(e) {
+        enableSound = !enableSound;
+        if (enableSound) {
+            $("#toggleIcon").attr("src", "/res/sound_on.png");
+        } else {
+            $("#toggleIcon").attr("src", "/res/sound_off.png");
+        }
     });
 }
 
