@@ -2,7 +2,7 @@ var spPresses = 0;
 
 function spInit(data) {
 	spPresses = 0;
-	window.addEventListener("keypress", function(e) {
+	window.onkeypress =  function(e) {
 		if (e.key == " " || e.key == "Spacebar") {
 			spPresses++;
 			$("#spInfo").html(spPresses+"x");
@@ -12,7 +12,7 @@ function spInit(data) {
 			}
 		}
 
-	});
+	};
 }
 
 function spSendResult() {

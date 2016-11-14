@@ -71,6 +71,10 @@ function play() {
     }
 
     PlayerInfo.nickname = $("#nickname").val();
+    if (/^<[^>]*>$/.test(PlayerInfo.nickname)) {
+        showError("Nickname cannot contain HTML tags! (> and < symbols)");
+        return;
+    }
     $("#playerNick").html(PlayerInfo.nickname);
 
     $("#game").show();

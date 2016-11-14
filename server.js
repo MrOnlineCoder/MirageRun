@@ -13,6 +13,7 @@ var express = require("express");
 var util    = require("./util.js");
 var app     = express();
 var http    = require("http").Server(app);
+var sanitizeHtml = require('sanitize-html');
 
 // ##########
 // Setting up server and variables
@@ -261,10 +262,39 @@ function getCurrentState() {
     return states[currentState];
 }
 
+/*
+    Thanks to: http://stackoverflow.com/a/6274398/5605426
+*/
+
+function shuffle(array) {
+    var counter = array.length - 1;
+
+    // While there are elements in the array
+    while (counter > 2) {
+        // Pick a random index
+        var index = Math.floor(Math.random() * (counter - 1) + 1)  ;
+
+        // Decrease counter by 1
+        counter--;
+
+        // And swap the last element with it
+        var temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
+}
+
 function nextState() {
     currentState++;
     isWon = false;
     if (currentState == states.length) {
+        states = shuffle(states);
+        console.log("Shuffle result: ");
+        for(var i = 0; i<states.length;i++) {
+            console.log(states[i].type);
+        }
         currentState = 0;
     }
     broadcastState(states[currentState].init());
@@ -301,6 +331,8 @@ function broadcastOnline() {
     io.sockets.emit("online", getClientsCount());
 }
 
+
+
 function broadcastTime() {
      io.sockets.emit("time", getCurrentState().time);
 }
@@ -321,10 +353,14 @@ io.on("connection", function (socket) {
     socket.on("userData", function(data) {
         if (isWon) return;
         if(states[currentState].handleData(data.data)) {
-            console.log("[Round] Player has done the task: "+data.nickname);
+            var cleanNickname = sanitizeHtml(data.nickname, {
+                allowedTags: [],
+                allowedAttributes: []
+            });
+            console.log("[Round] Player has done the task: "+cleanNickname);
             isWon = true;
-            broadcastStatus(data.nickname+" wins the round!");
-            scoreboard[data.nickname]++;
+            broadcastStatus(cleanNickname+" wins the round!");
+            scoreboard[cleanNickname]++;
         }
     });
 
